@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+	<style type="text/css">
+		#can{
+			background-image: url('images/1.jpg');
+			background-repeat: no-repeat;
+			background-size:cover;
+			background-position-x: -100px;
+			border-radius: 50%;
+			margin: 0 auto;
+			display: block;
+			opacity: 0.8;
+		}
+	</style>
+</head>
+<body>
+    <div>
+	<canvas id="can" width="400px" height="400px"></canvas>
+	</div>
+	<script type="text/javascript">
+		var canvas=document.getElementById("can");
+		var cxt= canvas.getContext("2d");
+		
+		// console.log(hours+":"+min+":"+sec);
+		setInterval(show,500);
+		function show(){
+			cxt.clearRect(0,0,400,400);
+		var dat=new Date();
+		var hour=dat.getHours();
+		var min=dat.getMinutes();
+		var sec=dat.getSeconds();
+	    var hours =hour+min/60;
+		if(hours>12){
+			hours= hour-12;
+		}
+		cxt.beginPath();
+		cxt.strokeStyle="darksalmon";
+		cxt.lineWidth=10;
+		cxt.arc(200,200,200,-90*Math.PI/180,360*Math.PI/180,false);
+		cxt.stroke();
+		cxt.closePath();
+		for(var i=0;i<=12;i++){
+			//保存异次元
+			cxt.save();
+			cxt.lineWidth=5;
+			//强制设置00点
+			cxt.translate(200,200);
+			//设置偏移角
+			cxt.rotate(i*30*Math.PI/180);
+			cxt.beginPath();
+			cxt.strokeStyle="purple";
+			cxt.moveTo(0,-200);
+			cxt.lineTo(0,-190);
+			cxt.stroke();
+			cxt.closePath();
+			//将异次元塞回画布
+			cxt.restore();
+		}
+		for(var i=0;i<60;i++){
+			//保存异次元
+			cxt.save();
+			cxt.lineWidth=2;
+			//强制设置00点
+			cxt.translate(200,200);
+			//设置偏移角
+			cxt.rotate(i*6*Math.PI/180);
+			if(i%5!=0){
+				cxt.beginPath();
+				cxt.moveTo(0,-200);
+				cxt.lineTo(0,-195);
+				cxt.strokeStyle="red";
+				cxt.stroke();
+				cxt.closePath();
+			}
+			//将异次元塞回画布
+			cxt.restore();
+		}
+		
+		//秒针
+		cxt.save()
+		cxt.translate(200,200);
+		cxt.rotate(sec*6*Math.PI/180);
+		cxt.beginPath();
+		cxt.lineWidth=3;
+		cxt.strokeStyle="red";
+		cxt.moveTo(0,-170);
+		cxt.lineTo(0,8);
+		cxt.stroke();
+		cxt.closePath();
+		cxt.restore();
+		//分针
+		cxt.save()
+		cxt.translate(200,200);
+		cxt.rotate(min*6*Math.PI/180);
+		cxt.beginPath();
+		cxt.lineWidth=5;
+		cxt.strokeStyle="green";
+		cxt.moveTo(0,-150);
+		cxt.lineTo(0,8);
+		cxt.stroke();
+		cxt.closePath();
+		cxt.restore();
+		//时针
+		cxt.save()
+		cxt.translate(200,200);
+		cxt.rotate(hours*30*Math.PI/180);
+		cxt.beginPath();
+		cxt.lineWidth=7;
+		cxt.strokeStyle="blue";
+		cxt.moveTo(0,-110);
+		cxt.lineTo(0,8);
+		cxt.stroke();
+		cxt.closePath();
+		cxt.restore();
+		//圆心
+		cxt.save();
+		cxt.translate(200,200);
+		cxt.beginPath();
+		cxt.arc(0,0,5,0,Math.PI*2);
+		cxt.fillStyle='blue';
+		cxt.fill();
+		cxt.closePath();
+		cxt.restore();
+		//文字
+		cxt.save();
+		cxt.translate(200,200);
+	    cxt.font="25px Arial";
+		cxt.textAlign='center';
+		cxt.fillStyle='yellow';
+		cxt.fillText("天明城",0,-60);
+        cxt.restore();
+
+		cxt.save();
+		cxt.translate(200,200);
+	    cxt.font="25px Georgia";
+		cxt.textAlign='center';
+		cxt.fillStyle='skyblue';
+		cxt.fillText(hour+":"+min+":"+sec,0,-25);
+        cxt.restore();
+
+		var nums = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2];
+		for(var i=0;i<nums.length;i++){	
+		cxt.save();
+		cxt.translate(200,200);
+	    cxt.font="20px Georgia";
+		cxt.textAlign='center';
+		cxt.fillStyle='yellow';
+		var rad = 2 * Math.PI / 12 * i;
+		cxt.fillText(nums[i],Math.cos(rad) * 160,Math.sin(rad) * 160);
+        cxt.restore();
+	}
+		}
+		show();	
+	</script>
+</body>
+</html>
